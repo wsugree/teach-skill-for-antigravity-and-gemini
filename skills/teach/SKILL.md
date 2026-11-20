@@ -76,7 +76,9 @@ If `learning-records/` already has at least one record:
 2. Create `lessons/NN-<slug>.html` targeting 5–10 minutes of focused study:
    - One clear mental model + key invariant.
    - Minimal, realistic code or concrete example.
-   - **Verified Illustrative Visuals (when visuals aid understanding):** Search for real, verifiable public-domain or Creative Commons images (e.g., Wikimedia Commons, museum collections, official docs), download them locally into `assets/` so the lesson stays 100% offline-safe (no broken hotlinks), and embed them using `<figure>` with `<figcaption>` showing the **title, creator/year, license, and source URL** (also logged in `RESOURCES.md`). Never fabricate or guess image URLs.
+   - **Verified Illustrative Visuals (when visuals aid understanding):** Search for real, verifiable public-domain or Creative Commons images (e.g., Wikimedia Commons, museum collections, official docs), download them locally into `assets/` so the lesson stays 100% offline-safe (no broken hotlinks), and embed them using `<figure>` with a mandatory **2-part `<figcaption>`**:
+     1. **Explanatory Teaching Caption (2–3 sentences):** Point out specifically *what to notice inside the image* and *how it illustrates the concept being taught* — never leave a bare title-only label.
+     2. **Attribution Line:** Title, creator/year, license, and clickable source URL (also logged in `RESOURCES.md`). Never fabricate or guess image URLs.
    - Interactive multiple-choice check + think-and-reveal prompt (inline vanilla JS).
    - 1–2 hands-on drills to bring back to chat.
    - Explicit citations from `RESOURCES.md`.
@@ -112,4 +114,4 @@ After the learner completes the drill or discusses the lesson in chat:
 - Generating a lesson without citing URLs from `RESOURCES.md`.
 - Advancing to `lessons/02-*.html` without checking recall of `learning-records/001-*.md`.
 - Adding external CDN links (`https://cdn...`, Google Fonts) inside generated HTML files.
-- Embedding guessed/unverified image URLs or images without creator, license, and source attribution in `<figcaption>`.
+- Embedding guessed/unverified image URLs, images without creator/license/source attribution, or bare title-only `<figcaption>` labels without an explanatory teaching caption explaining what to notice in the image.

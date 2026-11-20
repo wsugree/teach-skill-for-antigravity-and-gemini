@@ -171,8 +171,8 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
       <figure class="lesson-figure">
         <img src="../assets/example-image.jpg" alt="Descriptive alt text" />
         <figcaption>
-          <strong>Title / Subject</strong> — Creator (Year). License: Public Domain / CC BY-SA.
-          Source: <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">Wikimedia Commons / Museum</a>
+          <p><strong>What to notice:</strong> Explain in 2–3 clear sentences what the learner should observe in this image and how it proves the lesson's core concept.</p>
+          <p class="credit"><strong>Title / Subject</strong> — Creator (Year). License: Public Domain / CC BY-SA. Source: <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">Wikimedia Commons / Museum</a></p>
         </figcaption>
       </figure>
       <pre><code>// Minimal, realistic example</code></pre>
