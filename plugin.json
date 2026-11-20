@@ -1,7 +1,7 @@
 {
   "name": "teach-skill",
-  "displayName": "Teach Skill",
-  "description": "Stateful, multi-session interactive tutor for Antigravity: interviews your learning goals, vets trusted primary sources, generates offline interactive HTML lessons and cheat sheets, and tracks mastery across sessions.",
+  "displayName": "Teach Skill for Antigravity & Gemini",
+  "description": "Stateful, multi-session interactive tutor for Google Antigravity & Gemini CLI: interviews your learning goals, vets trusted primary sources, generates offline interactive HTML lessons and cheat sheets, and tracks mastery across sessions.",
   "version": "1.0.0",
   "logo": "assets/logo.png",
   "suggestedPrompts": [

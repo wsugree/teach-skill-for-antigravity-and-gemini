@@ -2,10 +2,10 @@
   <img src="assets/logo.png" alt="Teach Skill Logo" width="128" />
 </p>
 
-<h1 align="center">Teach Skill for Google Antigravity (<code>teach-skill</code>)</h1>
+<h1 align="center">Teach Skill for Antigravity &amp; Gemini (<code>teach-skill</code>)</h1>
 
 <p align="center">
-  <strong>Turn any folder into a persistent, interactive AI classroom for Google Antigravity.</strong><br/>
+  <strong>Turn any folder into a persistent, interactive AI classroom for Google Antigravity &amp; Gemini CLI.</strong><br/>
   Stateful multi-session tutoring • Vetted primary sources • Offline interactive HTML lessons • Active-recall mastery tracking
 </p>
 
@@ -77,12 +77,12 @@ Clone or copy this repository into your Antigravity global plugins directory:
 
 ### Windows (PowerShell)
 ```powershell
-git clone https://github.com/wsugree/teach-skill-for-antigravity.git "$env:USERPROFILE\.gemini\config\plugins\teach-skill"
+git clone https://github.com/wsugree/teach-skill-for-antigravity-and-gemini.git "$env:USERPROFILE\.gemini\config\plugins\teach-skill"
 ```
 
 ### macOS / Linux
 ```bash
-git clone https://github.com/wsugree/teach-skill-for-antigravity.git ~/.gemini/config/plugins/teach-skill
+git clone https://github.com/wsugree/teach-skill-for-antigravity-and-gemini.git ~/.gemini/config/plugins/teach-skill
 ```
 
 Antigravity discovers `teach-skill` automatically on your next turn. You can enable, disable, or inspect it anytime under **Customizations → Plugins**.
