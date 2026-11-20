@@ -9,6 +9,10 @@
   Stateful multi-session tutoring • Vetted primary sources • Offline interactive HTML lessons • Active-recall mastery tracking
 </p>
 
+<p align="center">
+  <strong>🇬🇧 English</strong> • <a href="README.th.md">🇹🇭 ภาษาไทย (Thai Guide)</a>
+</p>
+
 ---
 
 ## Why Teach Skill?
