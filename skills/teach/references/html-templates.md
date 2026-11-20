@@ -179,6 +179,21 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
       background: var(--accent-soft);
       border-left: 3px solid var(--accent);
     }
+    .lesson-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin: 1.5rem 0;
+      font-size: 0.92rem;
+    }
+    .lesson-nav a { text-decoration: none; font-weight: 600; }
+    .lesson-nav a:hover { text-decoration: underline; }
     a { color: var(--accent); }
   </style>
 </head>
@@ -230,6 +245,9 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
         <div class="podcast-controls">
           <button class="reveal-btn" type="button" id="pod-play">Play Podcast</button>
           <button class="reveal-btn" type="button" id="pod-stop">Stop</button>
+          <label>Voice:
+            <select id="pod-voice"></select>
+          </label>
           <label>Speed:
             <select id="pod-rate">
               <option value="0.9">0.9x</option>
@@ -238,9 +256,10 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
             </select>
           </label>
         </div>
+        <p id="pod-status" class="muted" style="font-size:0.85rem;margin:0.5rem 0 0;"></p>
         <div class="podcast-transcript">
-          <div class="podcast-line" data-speaker="Host A"><strong>Host A:</strong> Welcome back! Today we unpack the core mental model in under 2 minutes.</div>
-          <div class="podcast-line" data-speaker="Host B"><strong>Host B:</strong> And the biggest insight to remember is the key rule above.</div>
+          <div class="podcast-line" data-speaker="Host A" data-speak="Welcome back! Today we unpack the core mental model in under 2 minutes."><strong>Host A:</strong> Welcome back! Today we unpack the core mental model in under 2 minutes.</div>
+          <div class="podcast-line" data-speaker="Host B" data-speak="And the biggest insight to remember is the key rule above."><strong>Host B:</strong> And the biggest insight to remember is the key rule above.</div>
         </div>
       </div>
     </section>
@@ -279,6 +298,15 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
         <li><a href="https://example.com" target="_blank" rel="noopener noreferrer">Official Documentation Title</a> — Section used</li>
       </ul>
     </footer>
+
+    <nav class="lesson-nav" aria-label="Lesson navigation">
+      <a href="01-previous.html">← Previous Lesson</a>
+      <span>
+        <a href="../reference/cheat-sheet.html">Quick Reference</a> •
+        <a href="../ebook/topic-ebook.html">E-Book</a>
+      </span>
+      <a href="03-next.html">Next Lesson →</a>
+    </nav>
   </main>
 
   <script>
@@ -305,15 +333,46 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
       });
     });
 
-    // Built-in offline Podcast Player (Web Speech API)
+    // Built-in offline Podcast Player (Web Speech API with explicit language voice binding)
     const podBox = document.querySelector('.podcast-box');
     if (podBox && 'speechSynthesis' in window) {
       const lines = Array.from(podBox.querySelectorAll('.podcast-line'));
       const playBtn = document.getElementById('pod-play');
       const stopBtn = document.getElementById('pod-stop');
       const rateSel = document.getElementById('pod-rate');
+      const voiceSel = document.getElementById('pod-voice');
+      const statusEl = document.getElementById('pod-status');
       const lang = podBox.dataset.podcastLang || 'en-US';
+      const langPrefix = lang.split('-')[0].toLowerCase();
+      let matchingVoices = [];
       let idx = 0;
+
+      const loadVoices = () => {
+        const all = window.speechSynthesis.getVoices();
+        matchingVoices = all.filter((v) => v.lang && v.lang.toLowerCase().startsWith(langPrefix));
+        if (voiceSel) {
+          voiceSel.innerHTML = '';
+          if (matchingVoices.length > 0) {
+            matchingVoices.forEach((v, i) => {
+              const opt = document.createElement('option');
+              opt.value = String(i);
+              opt.textContent = `${v.name} (${v.lang})`;
+              voiceSel.appendChild(opt);
+            });
+            if (statusEl) statusEl.textContent = '';
+          } else {
+            const opt = document.createElement('option');
+            opt.value = '';
+            opt.textContent = `No ${lang} voice found`;
+            voiceSel.appendChild(opt);
+            if (statusEl) {
+              statusEl.textContent = `Tip: No ${lang} voice is installed in this browser. Open in Microsoft Edge/Chrome for built-in natural voices, or install the ${lang} voice pack in OS Speech settings.`;
+            }
+          }
+        }
+      };
+      loadVoices();
+      window.speechSynthesis.onvoiceschanged = loadVoices;
 
       const clearHighlight = () => lines.forEach((el) => el.classList.remove('speaking'));
       const speakNext = () => {
@@ -321,16 +380,23 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
         clearHighlight();
         const el = lines[idx];
         el.classList.add('speaking');
-        const utter = new SpeechSynthesisUtterance(el.textContent.replace(/^[^:]+:\s*/, ''));
+        const text = el.dataset.speak || el.textContent.replace(/^[^:]+:\s*/, '');
+        const utter = new SpeechSynthesisUtterance(text);
         utter.lang = lang;
-        utter.rate = parseFloat(rateSel.value || '1');
-        utter.pitch = el.dataset.speaker === 'Host B' ? 1.1 : 0.95;
+        if (matchingVoices.length > 0) {
+          const baseIdx = parseInt(voiceSel?.value || '0', 10) || 0;
+          const hostBIdx = matchingVoices.length > 1 ? (baseIdx + 1) % matchingVoices.length : baseIdx;
+          utter.voice = el.dataset.speaker === 'Host B' ? matchingVoices[hostBIdx] : matchingVoices[baseIdx];
+        }
+        utter.rate = parseFloat(rateSel?.value || '1');
+        utter.pitch = el.dataset.speaker === 'Host B' ? 1.08 : 0.95;
         utter.onend = () => { idx += 1; speakNext(); };
         window.speechSynthesis.speak(utter);
       };
 
       playBtn?.addEventListener('click', () => {
         window.speechSynthesis.cancel();
+        loadVoices();
         idx = 0;
         speakNext();
       });

@@ -31,7 +31,7 @@ Turn a dedicated local directory into a persistent, multi-session interactive cl
     └── NNN-<topic>.md        # ADR-style mastery logs & next Zone of Proximal Development (ZPD)
 ```
 
-**Language rule:** Match the learner's language (e.g., Thai, English) across chat, Markdown state files, and generated HTML lessons.
+**Language rule:** Match the learner's language (e.g., Thai, English) across chat, Markdown state files, generated HTML lessons, and podcasts. **For research (`search_web`), always search in English (canonical global docs/museums) in addition to the learner's language** so resource quality and breadth are never limited by language.
 
 ---
 
@@ -82,15 +82,15 @@ If `learning-records/` already has at least one record:
      1. **Explanatory Teaching Caption (2–3 sentences):** Point out specifically *what to notice inside the image* and *how it illustrates the concept being taught* — never leave a bare title-only label.
      2. **Attribution Line:** Title, creator/year, license, and clickable source URL (also logged in `RESOURCES.md`). Never fabricate or guess image URLs.
    - **Interactive Concept Animation (SVG/CSS/JS):** When a mechanism, flow, or timeline benefits from motion, embed a lightweight, zero-dependency inline SVG/JS interactive animation (with Play/Pause or Step controls) right inside the lesson HTML.
-   - **Auto-Generated Podcast / Audio Overview (NotebookLM-style):** Include a built-in **Podcast Player** directly inside the lesson HTML (using the browser's built-in Web Speech API `speechSynthesis` with Play/Pause/Stop, speed control, and live-highlighted 2-host conversational transcript — or an `<audio>` element if a local `.wav`/`.mp3` file is generated in `podcast/`). The plugin generates the script and player automatically so the learner can listen immediately with zero manual production.
    - Interactive multiple-choice check + think-and-reveal prompt (inline vanilla JS).
+   - **Cross-Lesson Navigation Bar:** Include clean relative links (`← Previous Lesson`, `Quick Reference`, `E-Book`, `Next Lesson →`) so the learner can move seamlessly between chapters in the browser without reopening files; when creating a new lesson, also update the previous lesson's `Next Lesson →` link.
    - 1–2 hands-on drills to bring back to chat.
    - Explicit citations from `RESOURCES.md`.
 3. In chat, give a clickable `file://` link to the new lesson and a brief 3–5 line orientation. **Do not duplicate the full lesson as a wall of text in chat.**
 
-#### 4c. Maintain Quick Reference & Optional E-Book
+#### 4c. Maintain Quick Reference & Multimedia E-Book (with Auto-Generated Podcast)
 - When a lesson introduces reusable syntax, CLI commands, APIs, or terminology, create or update `reference/<topic>.html` using the Reference Template in `references/html-templates.md`.
-- When the learner finishes a module or asks for a compiled summary, generate a print-to-PDF ready `ebook/<topic>-ebook.html` summarizing the completed chapters with citations.
+- Maintain a print-to-PDF ready `ebook/<topic>-ebook.html` compiling chapter summaries and verified visuals, and **embed the Auto-Generated Podcast / Audio Overview Player inside the E-Book** so learners who prefer listening over reading can play a 2-host conversational summary of the whole course (using Web Speech API `speechSynthesis` with explicit `utter.voice` matching the learner's language, voice selector, speed control, `data-speak` natural pronunciation for non-English terms, live-highlighted transcript, and `@media print { display: none; }` so PDF exports stay clean).
 
 #### 4d. Coach & Record Mastery
 After the learner completes the drill or discusses the lesson in chat:
