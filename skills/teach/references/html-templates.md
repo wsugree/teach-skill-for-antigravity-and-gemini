@@ -126,6 +126,26 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
     .feedback { margin-top: 0.5rem; font-size: 0.92rem; display: none; }
     .feedback.show { display: block; }
     .sources { font-size: 0.9rem; color: var(--muted); }
+    figure.lesson-figure {
+      margin: 1.25rem 0;
+      padding: 0.85rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    figure.lesson-figure img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 6px;
+    }
+    figure.lesson-figure figcaption {
+      margin-top: 0.65rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
     a { color: var(--accent); }
   </style>
 </head>
@@ -147,6 +167,14 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
       <div class="callout">
         <strong>Key Rule:</strong> State the one invariant worth memorizing.
       </div>
+      <!-- Optional verified visual downloaded to ../assets/ -->
+      <figure class="lesson-figure">
+        <img src="../assets/example-image.jpg" alt="Descriptive alt text" />
+        <figcaption>
+          <strong>Title / Subject</strong> — Creator (Year). License: Public Domain / CC BY-SA.
+          Source: <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">Wikimedia Commons / Museum</a>
+        </figcaption>
+      </figure>
       <pre><code>// Minimal, realistic example</code></pre>
     </section>
 

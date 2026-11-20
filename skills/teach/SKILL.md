@@ -18,10 +18,13 @@ Turn a dedicated local directory into a persistent, multi-session interactive cl
 ├── MISSION.md                # Learning goal, current level, constraints, success criteria
 ├── RESOURCES.md              # Vetted official docs, guides & primary sources (cited in lessons)
 ├── NOTES.md                  # Tutor scratchpad: learner pace, style, recurring sticking points
+├── assets/                   # Local verified public-domain/CC images for offline lessons (optional)
 ├── lessons/
 │   └── NN-<slug>.html        # Self-contained offline interactive HTML lessons (5-10 min each)
 ├── reference/
 │   └── <topic>.html          # Compressed cheat sheets, syntax tables & glossaries
+├── ebook/
+│   └── <topic>-ebook.html    # Optional printable/PDF summary e-book combining chapters
 └── learning-records/
     └── NNN-<topic>.md        # ADR-style mastery logs & next Zone of Proximal Development (ZPD)
 ```
@@ -73,13 +76,15 @@ If `learning-records/` already has at least one record:
 2. Create `lessons/NN-<slug>.html` targeting 5–10 minutes of focused study:
    - One clear mental model + key invariant.
    - Minimal, realistic code or concrete example.
+   - **Verified Illustrative Visuals (when visuals aid understanding):** Search for real, verifiable public-domain or Creative Commons images (e.g., Wikimedia Commons, museum collections, official docs), download them locally into `assets/` so the lesson stays 100% offline-safe (no broken hotlinks), and embed them using `<figure>` with `<figcaption>` showing the **title, creator/year, license, and source URL** (also logged in `RESOURCES.md`). Never fabricate or guess image URLs.
    - Interactive multiple-choice check + think-and-reveal prompt (inline vanilla JS).
    - 1–2 hands-on drills to bring back to chat.
    - Explicit citations from `RESOURCES.md`.
 3. In chat, give a clickable `file://` link to the new lesson and a brief 3–5 line orientation. **Do not duplicate the full lesson as a wall of text in chat.**
 
-#### 4c. Maintain Quick Reference
-When a lesson introduces reusable syntax, CLI commands, APIs, or terminology, create or update `reference/<topic>.html` using the Reference Template in `references/html-templates.md`.
+#### 4c. Maintain Quick Reference & Optional E-Book
+- When a lesson introduces reusable syntax, CLI commands, APIs, or terminology, create or update `reference/<topic>.html` using the Reference Template in `references/html-templates.md`.
+- When the learner finishes a module or asks for a compiled summary, generate a print-to-PDF ready `ebook/<topic>-ebook.html` summarizing the completed chapters with citations.
 
 #### 4d. Coach & Record Mastery
 After the learner completes the drill or discusses the lesson in chat:
@@ -107,3 +112,4 @@ After the learner completes the drill or discusses the lesson in chat:
 - Generating a lesson without citing URLs from `RESOURCES.md`.
 - Advancing to `lessons/02-*.html` without checking recall of `learning-records/001-*.md`.
 - Adding external CDN links (`https://cdn...`, Google Fonts) inside generated HTML files.
+- Embedding guessed/unverified image URLs or images without creator, license, and source attribution in `<figcaption>`.
