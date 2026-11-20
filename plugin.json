@@ -1,11 +1,12 @@
 {
   "name": "teach-skill",
   "displayName": "Teach Skill",
-  "description": "Stateful, multi-session interactive tutor for Antigravity: interviews your learning goals, vets trusted resources, generates offline interactive HTML lessons and cheat sheets, and tracks mastery across sessions.",
+  "description": "Stateful, multi-session interactive tutor for Antigravity: interviews your learning goals, vets trusted primary sources, generates offline interactive HTML lessons and cheat sheets, and tracks mastery across sessions.",
   "version": "1.0.0",
+  "logo": "assets/logo.png",
   "suggestedPrompts": [
-    "/teach Help me learn Rust ownership and borrowing from scratch",
-    "/teach Continue my current learning mission and check what I remember",
-    "/teach Build a quick-reference cheat sheet for the concepts I learned so far"
+    "/teach Start a new learning workspace: interview my goals and build Lesson 1 on Rust ownership",
+    "/teach Resume my current mission, quiz what I remember from last session, and unlock the next lesson",
+    "/teach Create an offline quick-reference cheat sheet for the key concepts I have mastered so far"
   ]
 }
