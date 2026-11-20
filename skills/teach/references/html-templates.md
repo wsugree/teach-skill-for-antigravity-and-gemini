@@ -569,3 +569,22 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
 </body>
 </html>
 ```
+
+
+---
+
+## 3. Editorial Magazine E-Book & Audiobook Template (`ebook/<topic>-ebook.html`)
+
+Use this **Canva Editorial Magazine + Audiobook Reader** design pattern whenever generating a course summary E-Book (`ebook/<topic>-ebook.html`):
+
+- **Palette (Espresso / Warm Taupe / Cream):**
+  - Light mode: `--bg: #ede7e1`, `--surface: #ffffff`, `--text: #3a2e27`, `--muted: #78695f`, `--accent: #5a463a`, `--taupe: #d6ccc2`, pull-quote border `#a67b60`.
+  - Dark mode (`html[data-theme="dark"]`): `--bg: #171412`, `--surface: #221d1a`, `--text: #f3ede7`, `--accent: #c9a68a`.
+- **Signature Editorial Elements:**
+  - Deep espresso cover card with arch-top thumbnail (`border-radius: 90px 90px 14px 14px`) and course title eyebrow.
+  - Magazine chapter cards with vertical right-side taupe spine (`border-right: 12px solid #d6ccc2`), circular chapter badges (`border-radius: 50%`), arch-top photo frames (`border-radius: 120px 120px 14px 14px`), and italicized pull-quote takeaway blocks.
+  - **Top App Bar:** live `Aa` font-size range slider (15–22px), 1-click Light/Dark mode toggle, link to Quick Reference, and 1-click **Print / Save as PDF** (`window.print()`).
+  - **3 Interactive Tabs:**
+    1. **Read E-Book** (all chapter cards + verified offline images with 2-part teaching captions + summary table)
+    2. **Chapters Directory** (circular chapter cards linking both to the E-Book chapter anchor and the interactive `lessons/NN-*.html`)
+    3. **Audio Podcast Player** (arch-top cover art, animated CSS waveform bars, circular espresso Play button, voice & speed selectors, live-highlighted transcript using the chunked GC-safe `speechSynthesis` engine from Section 1, hidden cleanly in `@media print`).
