@@ -105,6 +105,11 @@ Antigravity discovers `teach-skill` automatically on your next turn. You can ena
    ```
 3. **Continue across sessions:** Re-open the same folder days later and run `/teach`. Your tutor reads `MISSION.md` and `learning-records/`, checks what you remember, and unlocks the next lesson.
 
+### Audio Podcast Voice Tip (Thai & Non-English Languages)
+The built-in Podcast Player uses your browser's Web Speech API (`speechSynthesis`) with automatic language voice matching:
+- **Fastest (recommended on Windows):** Open generated E-Book / lesson `.html` files in **Microsoft Edge**, which includes built-in natural voices for Thai (`Microsoft Premwadee` & `Microsoft Niwat`) and dozens of other languages with zero setup.
+- **For Chrome / other browsers on Windows:** Install your language's voice pack via **Settings → Time & language → Speech → Manage voices → Add voices**, then restart the browser.
+
 ---
 
 ## Inspiration & License
