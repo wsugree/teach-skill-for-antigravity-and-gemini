@@ -201,6 +201,7 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
     }
     .lesson-nav a { text-decoration: none; font-weight: 600; }
     .lesson-nav a:hover { text-decoration: underline; }
+    .ui-icon { width: 16px; height: 16px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; vertical-align: -3px; margin-right: 5px; display: inline-block; }
     a { color: var(--accent); }
   </style>
 </head>
@@ -250,8 +251,8 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
       <div class="podcast-box" data-podcast-lang="en-US">
         <p><strong>Audio Podcast Overview (Auto-Generated):</strong> Listen to a 2-host conversational summary of this lesson.</p>
         <div class="podcast-controls">
-          <button class="reveal-btn" type="button" id="pod-play">Play Podcast</button>
-          <button class="reveal-btn" type="button" id="pod-stop">Stop</button>
+          <button class="reveal-btn" type="button" id="pod-play"><svg class="ui-icon" viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4"/></svg>Play Podcast</button>
+          <button class="reveal-btn" type="button" id="pod-stop"><svg class="ui-icon" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>Stop</button>
           <label>Voice:
             <select id="pod-voice"></select>
           </label>
@@ -307,12 +308,12 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
     </footer>
 
     <nav class="lesson-nav" aria-label="Lesson navigation">
-      <a href="01-previous.html">← Previous Lesson</a>
+      <a href="01-previous.html"><svg class="ui-icon" viewBox="0 0 24 24" style="margin-right:3px;"><polyline points="15 18 9 12 15 6"/></svg>Previous Lesson</a>
       <span>
         <a href="../reference/cheat-sheet.html">Quick Reference</a> •
         <a href="../ebook/topic-ebook.html">E-Book</a>
       </span>
-      <a href="03-next.html">Next Lesson →</a>
+      <a href="03-next.html">Next Lesson<svg class="ui-icon" viewBox="0 0 24 24" style="margin-right:0;margin-left:3px;"><polyline points="9 18 15 12 9 6"/></svg></a>
     </nav>
   </main>
 
