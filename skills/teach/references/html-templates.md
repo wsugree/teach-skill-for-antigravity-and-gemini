@@ -1,4 +1,4 @@
-# Offline HTML Templates for `/teach`
+﻿# Offline HTML Templates for `/teach`
 
 Use these self-contained templates when generating `lessons/NN-<slug>.html` and `reference/<topic>.html`.
 
@@ -20,13 +20,13 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
   <title>Lesson NN — Title</title>
   <style>
     :root {
-      --bg: #ffffff;
-      --surface: #f6f8fa;
-      --border: #d0d7de;
-      --text: #1f2328;
-      --muted: #59636e;
-      --accent: #0969da;
-      --accent-soft: #ddf4ff;
+      --bg: #faf9f6;
+      --surface: #ffffff;
+      --border: #e5e2dc;
+      --text: #1c1917;
+      --muted: #57534e;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
       --ok: #1a7f37;
       --ok-soft: #dafbe1;
       --warn: #9a6700;
@@ -53,17 +53,19 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      padding: 2rem 1.25rem 4rem;
+      padding: 2rem 1.25rem 4.5rem;
       background: var(--bg);
       color: var(--text);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      line-height: 1.65;
+      font-family: "Noto Sans Thai", "Sarabun", "Leelawadee UI", "Segoe UI", system-ui, -apple-system, sans-serif;
+      font-size: 1.04rem;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
     }
     main { max-width: 780px; margin: 0 auto; }
     header {
       border-bottom: 1px solid var(--border);
-      padding-bottom: 1.25rem;
-      margin-bottom: 2rem;
+      padding-bottom: 1.35rem;
+      margin-bottom: 2.2rem;
     }
     .meta {
       display: flex;
@@ -71,17 +73,22 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
       gap: 0.5rem 1rem;
       font-size: 0.875rem;
       color: var(--muted);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
     }
     .badge {
       background: var(--accent-soft);
       color: var(--accent);
-      padding: 0.15rem 0.55rem;
+      padding: 0.18rem 0.7rem;
       border-radius: 999px;
-      font-weight: 600;
+      font-weight: 700;
     }
-    h1 { margin: 0.25rem 0 0.5rem; font-size: 1.9rem; line-height: 1.25; }
-    h2 { margin-top: 2rem; font-size: 1.3rem; }
+    h1 { margin: 0.25rem 0 0.6rem; font-size: 1.95rem; line-height: 1.32; letter-spacing: -0.015em; }
+    h2 { margin-top: 2.25rem; font-size: 1.35rem; line-height: 1.4; letter-spacing: -0.01em; }
+    table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 1.25rem 0; font-size: 0.95rem; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    th, td { border-bottom: 1px solid var(--border); padding: 0.75rem 0.9rem; text-align: left; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    th { background: var(--surface); font-weight: 700; }
+    tbody tr:nth-child(even) { background: rgba(127, 127, 127, 0.04); }
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
