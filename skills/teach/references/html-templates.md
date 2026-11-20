@@ -208,6 +208,7 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
 <body>
   <main>
     <header>
+      <div class="course-eyebrow" style="font-size:0.85rem;font-weight:600;color:var(--accent);margin-bottom:0.35rem;">Course: <!-- Course Title from MISSION.md --></div>
       <div class="meta">
         <span class="badge">Lesson NN</span>
         <span>~8 min</span>
@@ -539,6 +540,7 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
 </head>
 <body>
   <main>
+    <div class="course-eyebrow" style="font-size:0.85rem;font-weight:600;color:var(--accent);margin-bottom:0.35rem;">Course: <!-- Course Title from MISSION.md --></div>
     <h1>Quick Reference: Topic</h1>
     <p class="muted">Compressed cheat sheet updated as you progress through lessons.</p>
 
