@@ -4,6 +4,7 @@
   "description": "Stateful, multi-session interactive multimedia tutor for Antigravity: interviews goals, vets trusted sources, generates offline HTML lessons with verified visuals & teaching captions, interactive SVG animations, auto-generated podcast overviews, and printable PDF e-books.",
   "version": "1.1.0",
   "logo": "assets/logo.png",
+  "repository": "https://github.com/wsugree/teach-skill-for-antigravity-and-gemini",
   "suggestedPrompts": [
     "/teach Start a new learning workspace: interview my goals and build Lesson 1 with visuals, animation, and podcast",
     "/teach Resume my current mission, quiz what I remember from last session, and unlock the next lesson",

@@ -81,12 +81,12 @@ Clone or copy this repository into your Antigravity global plugins directory:
 
 ### Windows (PowerShell)
 ```powershell
-git clone https://github.com/<YOUR_USERNAME>/teach-skill.git "$env:USERPROFILE\.gemini\config\plugins\teach-skill"
+git clone https://github.com/wsugree/teach-skill-for-antigravity-and-gemini.git "$env:USERPROFILE\.gemini\config\plugins\teach-skill"
 ```
 
 ### macOS / Linux
 ```bash
-git clone https://github.com/<YOUR_USERNAME>/teach-skill.git ~/.gemini/config/plugins/teach-skill
+git clone https://github.com/wsugree/teach-skill-for-antigravity-and-gemini.git ~/.gemini/config/plugins/teach-skill
 ```
 
 Antigravity discovers `teach-skill` automatically on your next turn. You can enable, disable, or inspect it anytime under **Customizations → Plugins**.
