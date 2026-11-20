@@ -333,7 +333,7 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
       });
     });
 
-    // Built-in offline Podcast Player (Web Speech API with explicit language voice binding)
+    // Built-in offline Podcast Player (Web Speech API — voice-bound, chunked, GC-safe)
     const podBox = document.querySelector('.podcast-box');
     if (podBox && 'speechSynthesis' in window) {
       const lines = Array.from(podBox.querySelectorAll('.podcast-line'));
@@ -345,12 +345,34 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
       const lang = podBox.dataset.podcastLang || 'en-US';
       const langPrefix = lang.split('-')[0].toLowerCase();
       let matchingVoices = [];
-      let idx = 0;
+      let queue = [];
+      let qIdx = 0;
+      let isPlaying = false;
+      let activeUtter = null; // Prevent Chromium GC from cutting off speech mid-sentence
+
+      const splitIntoChunks = (rawText, maxLen = 85) => {
+        const clean = rawText.replace(/\s+/g, ' ').trim();
+        if (!clean) return [];
+        const parts = clean.split(/(?<=[.!?।])\s+|\s{1,}/).filter(Boolean);
+        const chunks = [];
+        let buf = '';
+        for (const p of parts) {
+          if (buf && (buf.length + 1 + p.length) > maxLen) {
+            chunks.push(buf.trim());
+            buf = p;
+          } else {
+            buf = buf ? `${buf} ${p}` : p;
+          }
+        }
+        if (buf.trim()) chunks.push(buf.trim());
+        return chunks.length ? chunks : [clean];
+      };
 
       const loadVoices = () => {
         const all = window.speechSynthesis.getVoices();
         matchingVoices = all.filter((v) => v.lang && v.lang.toLowerCase().startsWith(langPrefix));
         if (voiceSel) {
+          const prev = voiceSel.value;
           voiceSel.innerHTML = '';
           if (matchingVoices.length > 0) {
             matchingVoices.forEach((v, i) => {
@@ -359,6 +381,7 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
               opt.textContent = `${v.name} (${v.lang})`;
               voiceSel.appendChild(opt);
             });
+            if (prev && Number(prev) < matchingVoices.length) voiceSel.value = prev;
             if (statusEl) statusEl.textContent = '';
           } else {
             const opt = document.createElement('option');
@@ -376,31 +399,56 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
 
       const clearHighlight = () => lines.forEach((el) => el.classList.remove('speaking'));
       const speakNext = () => {
-        if (idx >= lines.length) { clearHighlight(); return; }
-        clearHighlight();
-        const el = lines[idx];
-        el.classList.add('speaking');
-        const text = el.dataset.speak || el.textContent.replace(/^[^:]+:\s*/, '');
-        const utter = new SpeechSynthesisUtterance(text);
-        utter.lang = lang;
-        if (matchingVoices.length > 0) {
-          const baseIdx = parseInt(voiceSel?.value || '0', 10) || 0;
-          const hostBIdx = matchingVoices.length > 1 ? (baseIdx + 1) % matchingVoices.length : baseIdx;
-          utter.voice = el.dataset.speaker === 'Host B' ? matchingVoices[hostBIdx] : matchingVoices[baseIdx];
+        if (!isPlaying || qIdx >= queue.length) {
+          isPlaying = false;
+          activeUtter = null;
+          clearHighlight();
+          return;
         }
+        const item = queue[qIdx];
+        clearHighlight();
+        item.el.classList.add('speaking');
+        const utter = new SpeechSynthesisUtterance(item.text);
+        activeUtter = utter;
+        utter.lang = lang;
+        const baseIdx = parseInt(voiceSel?.value || '0', 10) || 0;
+        const hostBIdx = matchingVoices.length > 1 ? (baseIdx + 1) % matchingVoices.length : baseIdx;
+        utter.voice = item.speaker === 'Host B' ? matchingVoices[hostBIdx] : matchingVoices[baseIdx];
         utter.rate = parseFloat(rateSel?.value || '1');
-        utter.pitch = el.dataset.speaker === 'Host B' ? 1.08 : 0.95;
-        utter.onend = () => { idx += 1; speakNext(); };
+        utter.pitch = item.speaker === 'Host B' ? 1.06 : 0.95;
+        const advance = () => {
+          if (!isPlaying) return;
+          qIdx += 1;
+          setTimeout(speakNext, 60);
+        };
+        utter.onend = advance;
+        utter.onerror = advance;
         window.speechSynthesis.speak(utter);
       };
 
       playBtn?.addEventListener('click', () => {
         window.speechSynthesis.cancel();
         loadVoices();
-        idx = 0;
-        speakNext();
+        if (matchingVoices.length === 0) {
+          if (statusEl) {
+            statusEl.textContent = `Cannot play: no ${lang} voice found in this browser (using an English voice would skip non-English text). Open in Microsoft Edge or install the ${lang} voice pack in OS Settings.`;
+          }
+          return;
+        }
+        queue = [];
+        lines.forEach((el) => {
+          const raw = el.dataset.speak || el.textContent.replace(/^[^:]+:\s*/, '');
+          splitIntoChunks(raw).forEach((chunk) => {
+            queue.push({ el, speaker: el.dataset.speaker || 'Host A', text: chunk });
+          });
+        });
+        qIdx = 0;
+        isPlaying = true;
+        setTimeout(speakNext, 80);
       });
       stopBtn?.addEventListener('click', () => {
+        isPlaying = false;
+        activeUtter = null;
         window.speechSynthesis.cancel();
         clearHighlight();
       });
