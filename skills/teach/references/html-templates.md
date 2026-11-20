@@ -20,19 +20,19 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
   <title>Lesson NN — Title</title>
   <style>
     :root {
-      --bg: #faf9f6;
-      --surface: #ffffff;
-      --border: #e5e2dc;
-      --text: #1c1917;
-      --muted: #57534e;
-      --accent: #2563eb;
-      --accent-soft: #eff6ff;
+      --bg: #ffffff;
+      --surface: #f5f5f7;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --accent: #0071e3;
+      --accent-soft: #eef6ff;
       --ok: #1a7f37;
       --ok-soft: #dafbe1;
       --warn: #9a6700;
       --warn-soft: #fff8c5;
       --code-bg: #f0f3f6;
-      --radius: 10px;
+      --radius: 18px;
     }
     @media (prefers-color-scheme: dark) {
       :root {
