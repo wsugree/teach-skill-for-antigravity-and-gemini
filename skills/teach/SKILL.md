@@ -21,6 +21,8 @@ Turn a dedicated local directory into a persistent, multi-session interactive cl
 ├── assets/                   # Local verified public-domain/CC images for offline lessons (optional)
 ├── lessons/
 │   └── NN-<slug>.html        # Self-contained offline interactive HTML lessons (5-10 min each)
+├── podcast/
+│   └── NN-<slug>.md          # Optional standalone conversational podcast script / local audio
 ├── reference/
 │   └── <topic>.html          # Compressed cheat sheets, syntax tables & glossaries
 ├── ebook/
@@ -79,6 +81,8 @@ If `learning-records/` already has at least one record:
    - **Verified Illustrative Visuals (when visuals aid understanding):** Search for real, verifiable public-domain or Creative Commons images (e.g., Wikimedia Commons, museum collections, official docs), download them locally into `assets/` so the lesson stays 100% offline-safe (no broken hotlinks), and embed them using `<figure>` with a mandatory **2-part `<figcaption>`**:
      1. **Explanatory Teaching Caption (2–3 sentences):** Point out specifically *what to notice inside the image* and *how it illustrates the concept being taught* — never leave a bare title-only label.
      2. **Attribution Line:** Title, creator/year, license, and clickable source URL (also logged in `RESOURCES.md`). Never fabricate or guess image URLs.
+   - **Interactive Concept Animation (SVG/CSS/JS):** When a mechanism, flow, or timeline benefits from motion, embed a lightweight, zero-dependency inline SVG/JS interactive animation (with Play/Pause or Step controls) right inside the lesson HTML.
+   - **Auto-Generated Podcast / Audio Overview (NotebookLM-style):** Include a built-in **Podcast Player** directly inside the lesson HTML (using the browser's built-in Web Speech API `speechSynthesis` with Play/Pause/Stop, speed control, and live-highlighted 2-host conversational transcript — or an `<audio>` element if a local `.wav`/`.mp3` file is generated in `podcast/`). The plugin generates the script and player automatically so the learner can listen immediately with zero manual production.
    - Interactive multiple-choice check + think-and-reveal prompt (inline vanilla JS).
    - 1–2 hands-on drills to bring back to chat.
    - Explicit citations from `RESOURCES.md`.

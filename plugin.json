@@ -1,12 +1,12 @@
 {
   "name": "teach-skill",
-  "displayName": "Teach Skill for Antigravity & Gemini",
-  "description": "Stateful, multi-session interactive tutor for Google Antigravity & Gemini CLI: interviews your learning goals, vets trusted primary sources, generates offline interactive HTML lessons and cheat sheets, and tracks mastery across sessions.",
-  "version": "1.0.0",
+  "displayName": "Teach Skill",
+  "description": "Stateful, multi-session interactive multimedia tutor for Antigravity: interviews goals, vets trusted sources, generates offline HTML lessons with verified visuals & teaching captions, interactive SVG animations, auto-generated podcast overviews, and printable PDF e-books.",
+  "version": "1.1.0",
   "logo": "assets/logo.png",
   "suggestedPrompts": [
-    "/teach Start a new learning workspace: interview my goals and build Lesson 1 on Rust ownership",
+    "/teach Start a new learning workspace: interview my goals and build Lesson 1 with visuals, animation, and podcast",
     "/teach Resume my current mission, quiz what I remember from last session, and unlock the next lesson",
-    "/teach Create an offline quick-reference cheat sheet for the key concepts I have mastered so far"
+    "/teach Compile my completed lessons into a printable PDF e-book and quick-reference cheat sheet"
   ]
 }

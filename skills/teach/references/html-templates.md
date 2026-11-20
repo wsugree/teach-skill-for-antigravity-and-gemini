@@ -146,6 +146,39 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
       color: var(--muted);
       line-height: 1.5;
     }
+    .anim-stage {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin: 1.25rem 0;
+      text-align: center;
+    }
+    .anim-controls, .podcast-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+      margin-top: 0.75rem;
+    }
+    .podcast-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.25rem;
+      margin: 1.25rem 0;
+    }
+    .podcast-line {
+      padding: 0.45rem 0.65rem;
+      border-radius: 6px;
+      margin: 0.35rem 0;
+      font-size: 0.93rem;
+      transition: background 0.2s ease;
+    }
+    .podcast-line.speaking {
+      background: var(--accent-soft);
+      border-left: 3px solid var(--accent);
+    }
     a { color: var(--accent); }
   </style>
 </head>
@@ -176,6 +209,40 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
         </figcaption>
       </figure>
       <pre><code>// Minimal, realistic example</code></pre>
+    </section>
+
+    <section>
+      <h2>1.5 Interactive Animation &amp; Podcast Overview</h2>
+      <div class="anim-stage">
+        <!-- Lightweight inline SVG + CSS/JS step-through animation -->
+        <svg viewBox="0 0 600 180" width="100%" aria-label="Concept Animation">
+          <rect x="20" y="30" width="560" height="120" rx="12" fill="none" stroke="currentColor" stroke-opacity="0.25" />
+          <circle id="anim-dot" cx="80" cy="90" r="14" fill="var(--accent)" />
+        </svg>
+        <div class="anim-controls">
+          <button class="reveal-btn" type="button" id="anim-step-btn">Next Step</button>
+          <span id="anim-caption" class="muted">Step 1: Describe what happens here.</span>
+        </div>
+      </div>
+
+      <div class="podcast-box" data-podcast-lang="en-US">
+        <p><strong>Audio Podcast Overview (Auto-Generated):</strong> Listen to a 2-host conversational summary of this lesson.</p>
+        <div class="podcast-controls">
+          <button class="reveal-btn" type="button" id="pod-play">Play Podcast</button>
+          <button class="reveal-btn" type="button" id="pod-stop">Stop</button>
+          <label>Speed:
+            <select id="pod-rate">
+              <option value="0.9">0.9x</option>
+              <option value="1" selected>1.0x</option>
+              <option value="1.2">1.2x</option>
+            </select>
+          </label>
+        </div>
+        <div class="podcast-transcript">
+          <div class="podcast-line" data-speaker="Host A"><strong>Host A:</strong> Welcome back! Today we unpack the core mental model in under 2 minutes.</div>
+          <div class="podcast-line" data-speaker="Host B"><strong>Host B:</strong> And the biggest insight to remember is the key rule above.</div>
+        </div>
+      </div>
     </section>
 
     <section>
@@ -237,6 +304,41 @@ Use these self-contained templates when generating `lessons/NN-<slug>.html` and 
         if (target) target.classList.toggle('show');
       });
     });
+
+    // Built-in offline Podcast Player (Web Speech API)
+    const podBox = document.querySelector('.podcast-box');
+    if (podBox && 'speechSynthesis' in window) {
+      const lines = Array.from(podBox.querySelectorAll('.podcast-line'));
+      const playBtn = document.getElementById('pod-play');
+      const stopBtn = document.getElementById('pod-stop');
+      const rateSel = document.getElementById('pod-rate');
+      const lang = podBox.dataset.podcastLang || 'en-US';
+      let idx = 0;
+
+      const clearHighlight = () => lines.forEach((el) => el.classList.remove('speaking'));
+      const speakNext = () => {
+        if (idx >= lines.length) { clearHighlight(); return; }
+        clearHighlight();
+        const el = lines[idx];
+        el.classList.add('speaking');
+        const utter = new SpeechSynthesisUtterance(el.textContent.replace(/^[^:]+:\s*/, ''));
+        utter.lang = lang;
+        utter.rate = parseFloat(rateSel.value || '1');
+        utter.pitch = el.dataset.speaker === 'Host B' ? 1.1 : 0.95;
+        utter.onend = () => { idx += 1; speakNext(); };
+        window.speechSynthesis.speak(utter);
+      };
+
+      playBtn?.addEventListener('click', () => {
+        window.speechSynthesis.cancel();
+        idx = 0;
+        speakNext();
+      });
+      stopBtn?.addEventListener('click', () => {
+        window.speechSynthesis.cancel();
+        clearHighlight();
+      });
+    }
   </script>
 </body>
 </html>
