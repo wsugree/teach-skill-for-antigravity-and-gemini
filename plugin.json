@@ -1,0 +1,11 @@
+{
+  "name": "teach-skill",
+  "displayName": "Teach Skill",
+  "description": "Stateful, multi-session interactive tutor for Antigravity: interviews your learning goals, vets trusted resources, generates offline interactive HTML lessons and cheat sheets, and tracks mastery across sessions.",
+  "version": "1.0.0",
+  "suggestedPrompts": [
+    "/teach Help me learn Rust ownership and borrowing from scratch",
+    "/teach Continue my current learning mission and check what I remember",
+    "/teach Build a quick-reference cheat sheet for the concepts I learned so far"
+  ]
+}
