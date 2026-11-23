@@ -739,3 +739,19 @@ Use this zero-dependency Reveal.js-style 16:9 presentation deck whenever creatin
 </body>
 </html>
 ```
+
+
+---
+
+## 5. Click-to-Zoom Uncropped Image Lightbox (Include on All Pages with Images)
+
+Add this zero-dependency Lightbox snippet to every lesson, E-Book, and slide deck containing images so clicking any cropped or diamond-framed image opens the full, uncropped original (`object-fit: contain`) with its caption and `Esc`/click-outside to close:
+
+```html
+<!-- CSS: img { cursor: zoom-in; } .img-lightbox { display:none; position:fixed; inset:0; z-index:9999; background:rgba(10,14,22,0.88); backdrop-filter:blur(8px); align-items:center; justify-content:center; flex-direction:column; padding:24px; } .img-lightbox.open { display:flex; } .img-lightbox img { max-width:92vw; max-height:82vh; object-fit:contain; border-radius:12px; cursor:zoom-out; } -->
+<div class="img-lightbox" id="img-lightbox" role="dialog" aria-modal="true">
+  <button type="button" id="lb-close">✕ Close (Esc)</button>
+  <img id="lb-img" src="" alt="" />
+  <div id="lb-cap"></div>
+</div>
+```
