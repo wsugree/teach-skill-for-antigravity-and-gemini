@@ -597,11 +597,13 @@ Use this **Canva Editorial Magazine + Audiobook Reader** design pattern whenever
 Use this zero-dependency Reveal.js-style 16:9 presentation deck whenever creating teaching slides.
 
 **Design & QA Rules:**
-- **Max 3–4 short lines of text per slide** — prioritize custom inline SVG diagrams, visual cards, and verified offline images.
-- **Clean Scientific Modern palette** (Light Mode `#FFFFFF` / `#F4F7FA`, Deep Navy `#0F2A4A`, Mint `#10B981`; adapt to Editorial Espresso/Taupe for humanities topics).
+- **Max 3–4 short lines of text per slide** — prioritize custom inline SVG diagrams, visual cards, and photorealistic studio images (generated via `image-generator` as 1:1 unbranded studio photos saved to `assets/`, never cartoonish art) or verified offline public-domain photos.
+- **Themes:**
+  - **PowerDeck Geometric Blue Diamond (Default Modern Deck):** `#FFFFFF` canvas, Cobalt Blue `#14649B`, Midnight Navy `#0B1E36`, Ice Blue `#E4F0FA`, 45°-rotated rounded diamond photo frames (`.diamond-photo` with counter-rotated `<img>`), numbered diamond badges (`.d-badge`), and full-bleed cobalt Glassmorphism break slides.
+  - **Clean Scientific Modern:** Light Mode `#FFFFFF` / `#F4F7FA`, Deep Navy `#0F2A4A`, Mint `#10B981`.
 - **Typography:** `"IBM Plex Sans Thai", "Prompt", "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif`.
-- **Keyboard & Presenter UX:** `←` / `→` / `Space` navigate slides, `N` toggles Speaker Notes, `O` toggles Overview grid, `F` toggles Fullscreen, and `@media print` exports clean 16:9 landscape PDF pages.
-- **Visual QA Gate:** Capture rendered slide PNGs with headless Edge/Chrome and inspect via `read_file` to ensure zero overflow or clipping before delivery.
+- **Keyboard & Presenter UX:** `←` / `→` / `Space` navigate slides, `N` toggles Speaker Notes, `O` toggles Overview grid, `F` toggles Fullscreen, centered bottom control pill (never overlapping slide page numbers), and `@media print` exports clean 16:9 landscape PDF pages.
+- **Visual QA Gate:** Capture rendered slide PNGs with headless Chrome/Edge (`--headless=new --screenshot`) and inspect via `read_file` to ensure zero overflow, clipping, or control overlap before delivery.
 
 ```html
 <!DOCTYPE html>
