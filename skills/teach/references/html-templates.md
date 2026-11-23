@@ -588,3 +588,152 @@ Use this **Canva Editorial Magazine + Audiobook Reader** design pattern whenever
     1. **Read E-Book** (all chapter cards + verified offline images with 2-part teaching captions + summary table)
     2. **Chapters Directory** (circular chapter cards linking both to the E-Book chapter anchor and the interactive `lessons/NN-*.html`)
     3. **Audio Podcast Player** (arch-top cover art, animated CSS waveform bars, circular espresso Play button, voice & speed selectors, live-highlighted transcript using the chunked GC-safe `speechSynthesis` engine from Section 1, hidden cleanly in `@media print`).
+
+
+---
+
+## 4. Interactive 16:9 Web Presentation Deck Template (`slides/NN-<slug>-slides.html`)
+
+Use this zero-dependency Reveal.js-style 16:9 presentation deck whenever creating teaching slides.
+
+**Design & QA Rules:**
+- **Max 3–4 short lines of text per slide** — prioritize custom inline SVG diagrams, visual cards, and verified offline images.
+- **Clean Scientific Modern palette** (Light Mode `#FFFFFF` / `#F4F7FA`, Deep Navy `#0F2A4A`, Mint `#10B981`; adapt to Editorial Espresso/Taupe for humanities topics).
+- **Typography:** `"IBM Plex Sans Thai", "Prompt", "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif`.
+- **Keyboard & Presenter UX:** `←` / `→` / `Space` navigate slides, `N` toggles Speaker Notes, `O` toggles Overview grid, `F` toggles Fullscreen, and `@media print` exports clean 16:9 landscape PDF pages.
+- **Visual QA Gate:** Capture rendered slide PNGs with headless Edge/Chrome and inspect via `read_file` to ensure zero overflow or clipping before delivery.
+
+```html
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Slides — Course Title</title>
+  <style>
+    :root {
+      --bg: #f4f7fa;
+      --slide-bg: #ffffff;
+      --navy: #0f2a4a;
+      --mint: #10b981;
+      --mint-soft: #ecfdf5;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "IBM Plex Sans Thai", "Prompt", "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
+      overflow: hidden;
+    }
+    .deck {
+      width: 100vw; height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .slide {
+      display: none;
+      width: min(96vw, 1280px);
+      aspect-ratio: 16 / 9;
+      background: var(--slide-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px 56px;
+      box-shadow: 0 20px 50px rgba(15, 42, 74, 0.08);
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .slide.active { display: flex; }
+    .slide-eyebrow { font-size: 0.9rem; font-weight: 700; color: var(--mint); letter-spacing: 0.04em; text-transform: uppercase; }
+    .slide h1 { margin: 8px 0 12px; font-size: clamp(1.9rem, 3.2vw, 2.8rem); color: var(--navy); line-height: 1.25; }
+    .slide h2 { margin: 6px 0 16px; font-size: clamp(1.5rem, 2.4vw, 2.1rem); color: var(--navy); line-height: 1.3; }
+    .slide-body { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+    .slide-points { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; font-size: clamp(1rem, 1.35vw, 1.25rem); line-height: 1.6; }
+    .slide-points li { padding-left: 18px; border-left: 4px solid var(--mint); }
+    .diagram-box { background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 20px; text-align: center; }
+    .slide-footer { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 12px; }
+    .controls {
+      position: fixed; bottom: 16px; right: 24px; z-index: 20;
+      display: flex; gap: 8px; background: rgba(255,255,255,0.92);
+      border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px;
+      box-shadow: 0 4px 16px rgba(15,42,74,0.1);
+    }
+    .controls button {
+      border: none; background: transparent; color: var(--navy);
+      font-weight: 600; cursor: pointer; padding: 4px 10px; border-radius: 999px; font-family: inherit;
+    }
+    .controls button:hover { background: var(--mint-soft); color: var(--mint); }
+    .progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--mint); transition: width 0.25s ease; z-index: 30; }
+    .notes {
+      display: none; position: fixed; left: 24px; bottom: 16px; max-width: 520px; z-index: 25;
+      background: var(--navy); color: #f8fafc; padding: 14px 18px; border-radius: 14px; font-size: 0.9rem; line-height: 1.55;
+    }
+    .notes.show { display: block; }
+    @media print {
+      @page { size: landscape; margin: 0; }
+      html, body { overflow: visible; height: auto; background: #fff; }
+      .deck { display: block; padding: 0; height: auto; }
+      .slide { display: flex !important; width: 100vw; height: 100vh; border-radius: 0; box-shadow: none; page-break-after: always; }
+      .controls, .progress, .notes { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="deck" id="deck">
+    <section class="slide active" data-note="Speaker note for Slide 1.">
+      <div>
+        <div class="slide-eyebrow">Course Title • Module 01</div>
+        <h1>Presentation Title</h1>
+      </div>
+      <div class="slide-body">
+        <ul class="slide-points">
+          <li>Point 1 (concise, max 3–4 lines per slide)</li>
+          <li>Point 2 (pair with SVG diagram or verified visual)</li>
+        </ul>
+        <div class="diagram-box">
+          <!-- Custom inline SVG diagram or verified ../assets/ image -->
+          <svg viewBox="0 0 360 180" width="100%"><rect x="20" y="30" width="320" height="120" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/></svg>
+        </div>
+      </div>
+      <div class="slide-footer"><span>Course Name</span><span>1 / 1</span></div>
+    </section>
+  </div>
+  <div class="notes" id="notes"></div>
+  <div class="controls">
+    <button type="button" id="prev">Prev</button>
+    <button type="button" id="next">Next</button>
+    <button type="button" id="toggle-notes">Notes (N)</button>
+    <button type="button" id="print-pdf">PDF</button>
+  </div>
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const progress = document.getElementById('progress');
+    const notesEl = document.getElementById('notes');
+    let idx = 0;
+    const render = () => {
+      slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+      progress.style.width = `${((idx + 1) / slides.length) * 100}%`;
+      notesEl.textContent = slides[idx].dataset.note || 'No speaker notes for this slide.';
+    };
+    const go = (d) => { idx = Math.max(0, Math.min(slides.length - 1, idx + d)); render(); };
+    document.getElementById('prev').onclick = () => go(-1);
+    document.getElementById('next').onclick = () => go(1);
+    document.getElementById('toggle-notes').onclick = () => notesEl.classList.toggle('show');
+    document.getElementById('print-pdf').onclick = () => window.print();
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') go(1);
+      if (e.key === 'ArrowLeft') go(-1);
+      if (e.key.toLowerCase() === 'n') notesEl.classList.toggle('show');
+      if (e.key.toLowerCase() === 'f') document.documentElement.requestFullscreen?.();
+    });
+    render();
+  </script>
+</body>
+</html>
+```

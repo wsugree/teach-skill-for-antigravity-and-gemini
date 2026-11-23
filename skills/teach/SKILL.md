@@ -21,6 +21,8 @@ Turn a dedicated local directory into a persistent, multi-session interactive cl
 ├── assets/                   # Local verified public-domain/CC images for offline lessons (optional)
 ├── lessons/
 │   └── NN-<slug>.html        # Self-contained offline interactive HTML lessons (5-10 min each)
+├── slides/
+│   └── NN-<slug>-slides.html # Interactive 16:9 web presentation deck (Reveal-style, offline)
 ├── podcast/
 │   └── NN-<slug>.md          # Optional standalone conversational podcast script / local audio
 ├── reference/
@@ -91,6 +93,11 @@ If `learning-records/` already has at least one record:
 #### 4c. Maintain Quick Reference & Multimedia E-Book (with Auto-Generated Podcast)
 - When a lesson introduces reusable syntax, CLI commands, APIs, or terminology, create or update `reference/<topic>.html` using the Reference Template in `references/html-templates.md`.
 - Maintain a print-to-PDF ready `ebook/<topic>-ebook.html` compiling chapter summaries and verified visuals, and **embed the Auto-Generated Podcast / Audio Overview Player inside the E-Book** so learners who prefer listening over reading can play a 2-host conversational summary of the whole course (using Web Speech API `speechSynthesis` with explicit `utter.voice` matching the learner's language, voice selector, speed control, `data-speak` natural pronunciation for non-English terms, live-highlighted transcript, and `@media print { display: none; }` so PDF exports stay clean).
+- **Interactive 16:9 Presentation Slide Decks (`slides/NN-<slug>-slides.html`):** When the learner or educator requests teaching slides (or for each major module), generate a self-contained, zero-dependency Reveal-style 16:9 web presentation using Section 4 of `references/html-templates.md` (with optional `.pptx` export via `pptxgenjs` / `python-pptx` if explicitly requested):
+  - **Visual-First Rule:** Maximum **3–4 short lines of text per slide** — rely on custom inline SVG system/workflow diagrams, comparison cards, and verified offline images rather than paragraphs.
+  - **Clean Scientific Modern / Adaptive Design:** Default Light Mode (`#FFFFFF`, Deep Navy `#0F2A4A`, Mint `#10B981`) for scientific/technical topics (or Warm Editorial for humanities), Thai-friendly typography (`IBM Plex Sans Thai`, `Prompt`, `Noto Sans Thai`, `Leelawadee UI`).
+  - **Presenter Controls:** Keyboard navigation (`←` / `→` / `Space`), progress bar, `F` fullscreen, `N` speaker notes toggle, `O` slide overview grid, and 16:9 `@media print` PDF export.
+  - **Visual QA Gate:** Before handing back slides, capture screenshots (e.g., headless Edge/Chrome) and visually inspect with `read_file` to fix any text overflow, clipping, or layout collision.
 
 #### 4d. Coach & Record Mastery
 After the learner completes the drill or discusses the lesson in chat:
