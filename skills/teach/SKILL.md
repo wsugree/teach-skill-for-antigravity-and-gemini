@@ -15,6 +15,7 @@ Turn a dedicated local directory into a persistent, multi-session interactive cl
 
 ```text
 <learning-folder>/
+├── index.html                # Classroom Hub (main menu linking all lessons, slides, E-Book & reference)
 ├── MISSION.md                # Learning goal, current level, constraints, success criteria
 ├── RESOURCES.md              # Vetted official docs, guides & primary sources (cited in lessons)
 ├── NOTES.md                  # Tutor scratchpad: learner pace, style, recurring sticking points
@@ -94,6 +95,7 @@ If `learning-records/` already has at least one record:
 #### 4c. Maintain Quick Reference & Multimedia E-Book (with Auto-Generated Podcast)
 - When a lesson introduces reusable syntax, CLI commands, APIs, or terminology, create or update `reference/<topic>.html` using the Reference Template in `references/html-templates.md`.
 - Maintain a print-to-PDF ready `ebook/<topic>-ebook.html` compiling chapter summaries and verified visuals, and **embed the Auto-Generated Podcast / Audio Overview Player inside the E-Book** so learners who prefer listening over reading can play a 2-host conversational summary of the whole course (using Web Speech API `speechSynthesis` with explicit `utter.voice` matching the learner's language, voice selector, speed control, `data-speak` natural pronunciation for non-English terms, live-highlighted transcript, and `@media print { display: none; }` so PDF exports stay clean).
+- **Classroom Hub (`index.html`) & Unified Branding:** Maintain a central `index.html` Classroom Hub at the root of the learning folder linking all lessons, slide decks, E-Book/podcast, and reference sheets — ready to open offline or deploy directly to GitHub Pages / Microsoft Teams. Keep one consistent color palette across every asset in a course (default: **PowerDeck Cobalt-Blue & Clean White** `#14649B` / `#0B1E36` / `#FFFFFF` / `#F4F7FB`).
 - **Interactive 16:9 Presentation Slide Decks (`slides/NN-<slug>-slides.html`):** When the learner or educator requests teaching slides (or for each major module), generate a self-contained, zero-dependency Reveal-style 16:9 web presentation using Section 4 of `references/html-templates.md` (with optional `.pptx` export via `pptxgenjs` / `python-pptx` if explicitly requested):
   - **Visual-First Rule:** Maximum **3–4 short lines of text per slide** — rely on custom inline SVG system/workflow diagrams, comparison cards, and verified offline images rather than paragraphs.
   - **Clean Scientific Modern / PowerDeck Geometric Design:** Default to **PowerDeck Geometric Blue Diamond** (`#FFFFFF`, Cobalt `#14649B`, Midnight Navy `#0B1E36`, Ice `#E4F0FA`, 45° rounded diamond frames & badges, full-bleed cobalt Glassmorphism break slides) or **Clean Scientific Modern** (`#FFFFFF`, Navy `#0F2A4A`, Mint `#10B981`), with Thai-friendly typography (`IBM Plex Sans Thai`, `Prompt`, `Noto Sans Thai`, `Leelawadee UI`).
