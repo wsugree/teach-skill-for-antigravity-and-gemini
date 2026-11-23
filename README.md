@@ -25,7 +25,10 @@ Ordinary AI chat is great for quick answers, but terrible for *actually learning
 ## Key Features
 
 - **Goal-First Onboarding (`MISSION.md`):** Interviews you on *why* you're learning, your current level, constraints, and preferred language before teaching a single concept.
-- **Grounded in Vetted Sources (`RESOURCES.md`):** Uses web search to curate official documentation, museums, and canonical guides first — and cites them in every lesson instead of guessing from memory.
+- **Flexible Source Control (`sources/` + `RESOURCES.md`):** Choose between **3 Source Modes** during onboarding:
+  - **`auto`:** AI searches and vets official docs, museums, and canonical guides automatically.
+  - **`user-only` (AI Search OFF):** Drop your own paywalled academic papers, PDFs, e-books, notes into `sources/` (or paste YouTube/website links) — lessons and slides are built strictly from *your* materials with exact citations.
+  - **`hybrid`:** Combines your private `sources/` as primary ground truth with vetted web references.
 - **Verified Offline Visuals + Teaching Captions (`assets/`):** Downloads real Public Domain / Creative Commons images locally (no broken hotlinks) and enforces a mandatory **2-part caption** under every visual: *(1) what to notice & how it proves the concept* + *(2) creator, year, license, and source URL*.
 - **Interactive Concept Animations (SVG/CSS/JS):** Embeds lightweight, zero-dependency step-through animations directly inside lessons to visualize mechanisms, flows, and timelines.
 - **Auto-Generated Podcast Overview (NotebookLM-style):** Automatically writes a 2-host conversational summary and embeds an offline **Built-in Podcast Player** (Web Speech API with Play/Stop, speed control, and live-highlighted transcript) right inside the lesson — zero manual audio production required.

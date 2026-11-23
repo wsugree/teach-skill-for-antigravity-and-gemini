@@ -2,7 +2,7 @@
   "name": "teach-skill",
   "displayName": "Teach Skill",
   "description": "Stateful, multi-session interactive multimedia tutor for Antigravity: interviews goals, vets trusted sources, generates offline HTML lessons with verified visuals & teaching captions, interactive SVG animations, PowerDeck Geometric 16:9 slide decks with photorealistic studio visuals, Editorial E-Books with audio podcasts, and printable PDFs.",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "logo": "assets/logo.png",
   "repository": "https://github.com/wsugree/teach-skill-for-antigravity-and-gemini",
   "suggestedPrompts": [

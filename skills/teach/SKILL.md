@@ -16,10 +16,11 @@ Turn a dedicated local directory into a persistent, multi-session interactive cl
 ```text
 <learning-folder>/
 ├── index.html                # Classroom Hub (main menu linking all lessons, slides, E-Book & reference)
-├── MISSION.md                # Learning goal, current level, constraints, success criteria
-├── RESOURCES.md              # Vetted official docs, guides & primary sources (cited in lessons)
+├── MISSION.md                # Learning goal, current level, constraints, Source Mode & success criteria
+├── RESOURCES.md              # Vetted sources (AI search and/or user-provided files & links, cited in lessons)
 ├── NOTES.md                  # Tutor scratchpad: learner pace, style, recurring sticking points
-├── assets/                   # Local verified public-domain/CC images for offline lessons (optional)
+├── sources/                  # User-uploaded reference materials (PDFs, e-books, papers, notes, URLs)
+├── assets/                   # Local verified public-domain/CC or studio images for offline lessons
 ├── lessons/
 │   └── NN-<slug>.html        # Self-contained offline interactive HTML lessons (5-10 min each)
 ├── slides/
@@ -59,14 +60,18 @@ Before teaching anything, interview the learner (use `ask_question` or 3–4 foc
 1. **Why / Outcome:** What real project or skill they want to achieve.
 2. **Current Level:** Relevant background they already know.
 3. **Constraints & Pace:** Available time per session, preferred language, and learning style.
+4. **Source Mode (References):** Ask which reference mode they want to use (and record it explicitly in `MISSION.md`):
+   - **`auto` (AI Auto-Search):** Antigravity searches and vets official docs, museums, and primary guides via `search_web`.
+   - **`user-only` (User Sources Only — AI Web Search OFF):** Strictly use ONLY files the learner places in `sources/` (PDFs, e-books, academic papers, notes) and/or URLs/YouTube links they supply. Do **not** call `search_web` for content when `user-only` is selected.
+   - **`hybrid` (Combined):** Treat the learner's `sources/` files and links as primary ground truth, and supplement with `search_web` (clearly labeled separately in `RESOURCES.md`).
 
-Write the agreed goal to `MISSION.md` and initial preferences to `NOTES.md`.
+Write the agreed goal and `Source Mode` to `MISSION.md` and initial preferences to `NOTES.md`.
 
 ### Step 3: Resource Vetting (When `RESOURCES.md` is missing or starting a new subtopic)
-Never teach purely from parametric memory.
-1. Use `search_web` to locate official documentation, canonical specifications, or high-trust community guides for the topic.
-2. Log vetted sources in `RESOURCES.md` with title, URL, scope, and why it is trusted.
-3. Every lesson generated in Step 4 **must cite** specific entries from `RESOURCES.md`.
+Never teach purely from parametric memory. Follow the `Source Mode` recorded in `MISSION.md`:
+1. **Ingest User Sources (`user-only` & `hybrid`):** Inspect `<learning-folder>/sources/` (PDFs, e-books, Markdown/text notes) using `read_file` and inspect any learner-provided URLs or YouTube links. Log them in `RESOURCES.md` under `## User-Provided Primary Sources` with filename/URL, scope, and section/page references.
+2. **AI Web Search (`auto` & `hybrid` only):** Use `search_web` (in English + learner's language) to locate official documentation, canonical specifications, or high-trust guides, and log them under `## Vetted External Sources` with title, URL, scope, and trust rationale. **Skip `search_web` completely when `Source Mode` is `user-only`.**
+3. Every lesson, slide deck, and E-Book generated in Step 4 **must cite** specific entries from `RESOURCES.md` (including filename/page or URL).
 
 ### Step 4: Active-Learning Lesson Loop
 
@@ -130,3 +135,4 @@ After the learner completes the drill or discusses the lesson in chat:
 - Advancing to `lessons/02-*.html` without checking recall of `learning-records/001-*.md`.
 - Adding external CDN links (`https://cdn...`, Google Fonts) inside generated HTML files.
 - Embedding guessed/unverified image URLs, images without creator/license/source attribution, or bare title-only `<figcaption>` labels without an explanatory teaching caption explaining what to notice in the image.
+- Calling `search_web` for teaching content when `MISSION.md` is set to `Source Mode: user-only`.
